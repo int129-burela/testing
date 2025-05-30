@@ -12,9 +12,10 @@ This guide walks you through everything from installing Terraform and Azure CLI 
 | 1  | Install Terraform                |
 | 2  | Install Azure CLI                |
 | 3  | Login to Azure Account           |
-| 4  | Terraform Configuration          |
-| 5  | Execution Guide                  |
-| 6  | Common Issues and Tips           |
+| 4  | Creation of Resource group for handling Statefiles           |
+| 5  | Terraform Configuration          |
+| 6  | Execution Guide                  |
+| 7  | Common Issues and Tips           |
 
 
 ---
@@ -111,13 +112,20 @@ Select a subscription and tenant (Type a number or Enter for no changes): 1
 
 ---
 
-## 4. Terraform Configuration:
+## 4. Creation of Resource group for handling Statefiles:
+
+* If your project is under the JMAN Tenant ID, the product is already linked to the required resource group; you only need to update the container name in terraform/provider.tf.
+* If your project is under a different Tenant ID, you must create a resource group and a storage container, then update these details in terraform/provider.tf.
+
+---
+
+## 5. Terraform Configuration:
 
 * Navigate to the `terraform-configs` folder in fabric starter kit repository.
 * Each module in the `terraform-configs` directory reads data from CSV metadata files to dynamically create resources.
 * Below you can find all the modules.
 
-### 4.1 Resource Group Module:
+### 5.1 Resource Group Module:
 
 To configure the **Resource Group Module**, you need to upload the following metadata file:
 
@@ -137,7 +145,7 @@ To configure the **Resource Group Module**, you need to upload the following met
 
 ---
 
-### 4.2 Fabric Capacity Module:
+### 5.2 Fabric Capacity Module:
 
 To configure the **Fabric Capacity Module**, you need to upload the following metadata file:
 
@@ -167,7 +175,7 @@ To configure the **Fabric Capacity Module**, you need to upload the following me
 
 ---
 
-### 4.3 Application Module:
+### 5.3 Application Module:
 
 To configure the **Application Module**, you need to upload the following metadata file:
 
@@ -182,7 +190,7 @@ To configure the **Application Module**, you need to upload the following metada
 
 ---
 
-### 4.4 Key vault Module:
+### 5.4 Key vault Module:
 
 To configure the **Key vault Module**, you need to upload the following metadata file:
 
@@ -210,7 +218,7 @@ To configure the **Key vault Module**, you need to upload the following metadata
 
 ---
 
-### 4.5 Roles Assignment Module:
+### 5.5 Roles Assignment Module:
 
 ### Role Assignments (IAM) in Azure
 
@@ -250,11 +258,11 @@ To configure the **Roles Assignment Module**, you need to upload the following m
 
 ---
 
-## 5. Execution Guide
+## 6. Execution Guide
 
 Follow the steps below to configure and run the deployment script for setting up infrastructure and workspaces:
 
-### 5.1 Execute the Script
+### 6.1 Execute the Script
 
 Once the configuration is complete, run the following command in Git Bash to start the script:
 
@@ -275,7 +283,7 @@ In the "workspace_role_assignment" csv file in the "terraform/fabric-kit/fabirc-
    |Take from Azure portal| Roles like Admin/Contributor    | User's email| 
 
 
-### 5.2 Select an Option
+### 6.2 Select an Option
 
 After running the script, you will be prompted to select one of the following options:
 
@@ -319,12 +327,20 @@ If you select option 2 you need to update the details in 'credentials.csv' in th
 
 ---
 
-After creating the workspace, navigate to each one individually, open Workspace Settings, and configure Git Integration to connect it with your Git repository.
+After creating the workspace, navigate to each one individually, open Workspace Settings, and configure Git Integration to connect it with these details.
+
+| Repo         | Branch | OrganizationName | ProjectName           | GitProviderType | RepositoryName        | DirectoryName          |
+|--------------|--------|------------------|----------------------|-----------------|-----------------------|------------------------|
+| dev          | dev    | jmangroupltd     | Data-Engineering-CoE | AzureDevOps     | Data-Engineering-CoE  | ws_dev_started_kit     |
+| prod         | prod   | jmangroupltd     | Data-Engineering-CoE | AzureDevOps     | Data-Engineering-CoE  | ws_prod_starter_kit    |
+| landing-dev  | dev    | jmangroupltd     | Data-Engineering-CoE | AzureDevOps     | Data-Engineering-CoE  | ws_dev_started_kit     |
+| landing-prod | prod   | jmangroupltd     | Data-Engineering-CoE | AzureDevOps     | Data-Engineering-CoE  | ws_prod_starter_kit    |
+
 After importing the files from Git, disconnect the Git integration from the workspace.
 
 ---
 
-## 🛠️ 6. Common Issues and Fixes
+## 🛠️ 7. Common Issues and Fixes
 
 | Issue                             | Fix                                                               |
 | --------------------------------- | ----------------------------------------------------------------- |
